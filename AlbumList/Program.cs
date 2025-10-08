@@ -12,7 +12,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("AlbumDb")));
 builder.Services.AddScoped<AlbumService>();
+//Cors
+builder.Services.AddCors();
 var app = builder.Build();
+
+//Enabling Cors
+app.UseCors(builder => builder
+.AllowAnyOrigin()
+.AllowAnyMethod()
+.AllowAnyHeader()
+);
 
 //Seeding Albums
 using (var scope = app.Services.CreateScope())
